@@ -14,7 +14,7 @@ longpoll = VkLongPoll(vk_session)
 
 def sender():
     for event in longpoll.listen():
-        if event.from_chat and event.chat_id == chat_id:
+        if event.type == VkEventType.MESSAGE_NEW and event.from_chat and event.chat_id == chat_id:
             if event.message == '!random':
                 print("RANDOM")
                 s = []
@@ -24,7 +24,7 @@ def sender():
                     if len(s) != 0:
                         if s[0]['post_type'] != 'post':
                             s = []
-                print(vk.wall.getById(posts=f'{group_id}_{post_id}'))
+                # print(vk.wall.getById(posts=f'{group_id}_{post_id}'))
                 vk.messages.send(chat_id=chat_id, message='', random_id=random.randint(0, 10000), attachment=f'wall{group_id}_{post_id}')
             elif event.message == '!info':
                 print('INFO')
